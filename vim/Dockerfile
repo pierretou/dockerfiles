@@ -1,5 +1,4 @@
 FROM alpine:latest
-MAINTAINER zuolan <i@zuolan.me>
 ENV HOME=/home/user \
     TERM=xterm-256color \
     DISABLE=""
@@ -14,25 +13,21 @@ RUN apk add --update curl && \
     echo "filetype plugin indent on" >> /etc/vim/vimrc
 #    apk del curl && rm -rf /var/cache/* /var/log/* /var/tmp/*
 
-# 插件依赖
 RUN apk --update add curl ctags git python bash ncurses-terminfo                                                && \
-# 安装 YouCompleteMe
     apk add --virtual build-deps go llvm perl cmake python-dev build-base                                       && \
-    git clone --depth 1  https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe/    && \
-    cd ~/.vim/bundle/YouCompleteMe                                                                     && \
+    git clone --depth 1  https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe/             && \
+    cd ~/.vim/bundle/YouCompleteMe                                                                              && \
     git submodule update --init --recursive                                                                     && \
-    ~/.vim/bundle/YouCompleteMe/install.py --gocode-completer                                          && \
-# 安装 procvim.vim                                                                               
-    git clone --depth 1 https://github.com/Shougo/vimproc.vim.git ~/.vim/bundle/vimproc.vim            && \
-    cd ~/.vim/bundle/vimproc.vim                                                                       && \
+    ~/.vim/bundle/YouCompleteMe/install.py --gocode-completer                                                   && \
+    git clone --depth 1 https://github.com/Shougo/vimproc.vim.git ~/.vim/bundle/vimproc.vim                     && \
+    cd ~/.vim/bundle/vimproc.vim                                                                                && \
     make                                                                                                        && \
-# 清理
-    rm -rf ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp /usr/lib/go                                   \
-      ~/.vim/bundle/YouCompleteMe/third_party/ycmd/clang_includes                                      && \
+    rm -rf ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp /usr/lib/go                                         \
+    ~/.vim/bundle/YouCompleteMe/third_party/ycmd/clang_includes                                                 && \
     apk del build-deps                                                                                          && \
     apk add libxt libx11 libstdc++
 
-RUN cd ~/.vim/bundle/                                                                                  && \
+RUN cd ~/.vim/bundle/                                                                                           && \
     git clone --depth 1 https://github.com/pangloss/vim-javascript.git                                          && \
     git clone --depth 1 https://github.com/scrooloose/nerdcommenter.git                                         && \
     git clone --depth 1 https://github.com/godlygeek/tabular.git                                                && \
@@ -74,7 +69,6 @@ RUN cd ~/.vim/bundle/                                                           
     git clone --depth 1 https://github.com/christoomey/vim-tmux-navigator.git                                   && \
     git clone --depth 1 https://github.com/Quramy/tsuquyomi.git                                                 && \
     git clone --depth 1 https://github.com/ekalinin/Dockerfile.vim.git                                          && \
-# 清理
     vim -E -c 'execute pathogen#helptags()' -c q ; return 0
 
 ENTRYPOINT ["vim"]
