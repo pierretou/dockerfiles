@@ -1,5 +1,4 @@
-FROM ubuntu
-MAINTAINER izuolan <i@zuolan.me>
+FROM ubuntu:latest
 
 RUN apt-get update && \
     apt-get -y install sudo procps wget unzip mc && \
