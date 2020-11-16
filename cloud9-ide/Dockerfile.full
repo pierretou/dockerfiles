@@ -1,5 +1,4 @@
 FROM ubuntu
-MAINTAINER ZuoLan <i@zuolan.me>
 
 RUN apt-get update && \
     # Install dependencies

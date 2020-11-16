@@ -1,5 +1,4 @@
 FROM ubuntu
-MAINTAINER ZuoLan <i@zuolan.me>
 
 ENV buildDeps="make build-essential g++ gcc curl ca-certificates git" \
     c9Deps="nodejs" \

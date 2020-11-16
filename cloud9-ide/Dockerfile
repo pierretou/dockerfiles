@@ -1,5 +1,4 @@
 FROM node:slim
-MAINTAINER izuolan <i@zuolan.me>
 
 RUN buildDeps='make build-essential g++ gcc python2.7' && softDeps="git" && \
     apt-get update && apt-get upgrade -y && \
@@ -12,7 +11,7 @@ RUN buildDeps='make build-essential g++ gcc python2.7' && softDeps="git" && \
     apt-get purge -y --auto-remove $buildDeps && \
     apt-get autoremove -y && apt-get autoclean -y && apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
- 
+
 VOLUME /workspace
 EXPOSE 8181 
 ENTRYPOINT ["forever", "/cloud9/server.js", "-w", "/workspace", "-l", "0.0.0.0"]
